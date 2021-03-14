@@ -168,6 +168,7 @@ module advance_windm_edsclrm_module
       upwp_pert, & ! perturbed <u'w'> [m^2/s^2]
       vpwp_pert    ! perturbed <v'w'> [m^2/s^2]
 
+    km_zm
     ! Local Variables
     real( kind = core_rknd ), dimension(gr%nz) ::  &
       um_tndcy,    & ! u wind component tendency                    [m/s^2]
@@ -473,7 +474,7 @@ module advance_windm_edsclrm_module
        ! Compute the explicit portion of the um equation.
        ! Build the right-hand side vector.
        call windm_edsclrm_rhs( windm_edsclrm_um, dt, nu10_vert_res_dep, & ! In
-                               Km_zm, um_pert, um_tndcy,                & ! In
+                               Km_zm_pert, um_pert, um_tndcy,           & ! In
                                rho_ds_zm, invrs_rho_ds_zt,              & ! In
                                l_imp_sfc_momentum_flux, upwp_pert(1),   & ! In
                                rhs(:,windm_edsclrm_um)                  ) ! Out
@@ -481,7 +482,7 @@ module advance_windm_edsclrm_module
        ! Compute the explicit portion of the vm equation.
        ! Build the right-hand side vector.
        call windm_edsclrm_rhs( windm_edsclrm_vm, dt, nu10_vert_res_dep, & ! In
-                               Km_zm, vm_pert, vm_tndcy,                & ! In
+                               Km_zm_pert, vm_pert, vm_tndcy,           & ! In
                                rho_ds_zm, invrs_rho_ds_zt,              & ! In
                                l_imp_sfc_momentum_flux, vpwp_pert(1),   & ! In
                                rhs(:,windm_edsclrm_vm)                  ) ! Out
@@ -498,13 +499,13 @@ module advance_windm_edsclrm_module
 
        upwp_pert(2:gr%nz-1) &
        = -one_half &
-          * xpwp_fnc( Km_zm(2:gr%nz-1) + nu10_vert_res_dep(2:gr%nz-1), & ! in
+          * xpwp_fnc( Km_zm_pert(2:gr%nz-1) + nu10_vert_res_dep(2:gr%nz-1), & ! in
                       um_pert(2:gr%nz-1), um_pert(3:gr%nz), & ! in
                       gr%invrs_dzm(2:gr%nz-1) )
 
        vpwp_pert(2:gr%nz-1) &
        = -one_half &
-          * xpwp_fnc( Km_zm(2:gr%nz-1) + nu10_vert_res_dep(2:gr%nz-1), & ! in
+          * xpwp_fnc( Km_zm_pert(2:gr%nz-1) + nu10_vert_res_dep(2:gr%nz-1), & ! in
                       vm_pert(2:gr%nz-1), vm_pert(3:gr%nz), & ! in
                       gr%invrs_dzm(2:gr%nz-1) )
 
@@ -517,7 +518,7 @@ module advance_windm_edsclrm_module
 
        ! Compute the implicit portion of the um and vm equations.
        ! Build the left-hand side matrix.
-       call windm_edsclrm_lhs( dt, nu10_vert_res_dep, wm_zt, Km_zm,    & ! In
+       call windm_edsclrm_lhs( dt, nu10_vert_res_dep, wm_zt, Km_zm_pert,& ! In
                                wind_speed_pert, u_star_sqd_pert,       & ! In
                                rho_ds_zm, invrs_rho_ds_zt,             & ! In
                                l_implemented, l_imp_sfc_momentum_flux, & ! In
@@ -563,13 +564,13 @@ module advance_windm_edsclrm_module
 
        upwp_pert(2:gr%nz-1) &
        = upwp_pert(2:gr%nz-1) &
-         - one_half * xpwp_fnc( Km_zm(2:gr%nz-1)+nu10_vert_res_dep(2:gr%nz-1), &
+         - one_half * xpwp_fnc( Km_zm_pert(2:gr%nz-1)+nu10_vert_res_dep(2:gr%nz-1), &
                                 um_pert(2:gr%nz-1), um_pert(3:gr%nz), &
                                 gr%invrs_dzm(2:gr%nz-1) )
 
        vpwp_pert(2:gr%nz-1) &
        = vpwp_pert(2:gr%nz-1) &
-         - one_half * xpwp_fnc( Km_zm(2:gr%nz-1)+nu10_vert_res_dep(2:gr%nz-1), &
+         - one_half * xpwp_fnc( Km_zm_pert(2:gr%nz-1)+nu10_vert_res_dep(2:gr%nz-1), &
                                 vm_pert(2:gr%nz-1), vm_pert(3:gr%nz), &
                                 gr%invrs_dzm(2:gr%nz-1) )
 
