@@ -1073,7 +1073,6 @@ contains
        end do
     end if
 
-
     ! NOTE: the following 5 PFT flags/options are addtions to 'woody', 'stress_decid', 'season_decid',
     !     'evergreen', and 'crop', 'percop'. For default ELM, will be hard-coded; while for user-defined
     !      it must be included in physiology file.
