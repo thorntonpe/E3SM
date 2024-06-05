@@ -10,7 +10,7 @@ module CarbonStateUpdate1Mod
   use elm_varpar              , only : i_met_lit, i_cel_lit, i_lig_lit, i_cwd
   use elm_varcon              , only : dzsoi_decomp
   use elm_varctl              , only : nu_com, use_c13, use_c14
-  use elm_varctl              , only : use_pflotran, pf_cmode, use_fates
+  use elm_varctl              , only : use_pflotran, pf_cmode, use_fates, use_alquimia
   use pftvarcon               , only : npcropmin, nc3crop
   use CNDecompCascadeConType  , only : decomp_cascade_type
   use CNStateType             , only : cnstate_type
@@ -216,7 +216,7 @@ contains
           col_cs%decomp_som2c_vr(c,1:nlevdecomp) = col_cs%decomp_cpools_vr(c,1:nlevdecomp,6)
       end do
 
-      if (.not. is_active_betr_bgc .and. .not.(use_pflotran .and. pf_cmode) ) then
+      if (.not. is_active_betr_bgc .and. .not.(use_pflotran .and. pf_cmode)) then
 
          ! plant to litter fluxes
          if(.not.use_fates)then
@@ -236,6 +236,7 @@ contains
          end if
 
          ! litter and SOM HR fluxes
+         if(.not. use_alquimia) then
          do k = 1, ndecomp_cascade_transitions
             do j = 1,nlevdecomp
                ! column loop
@@ -260,7 +261,7 @@ contains
                end do
             end if
          end do
-
+      endif   ! alquimia
       endif   !end if is_active_betr_bgc()
 
       if (.not.use_fates) then
