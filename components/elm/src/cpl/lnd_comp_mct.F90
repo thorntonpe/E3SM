@@ -11,7 +11,11 @@ module lnd_comp_mct
   use shr_sys_mod      , only : shr_sys_flush
   use mct_mod          , only : mct_avect, mct_gsmap
   use decompmod        , only : bounds_type, ldecomp
+#ifdef CPL_BYPASS  
+  use lnd_import_export_bypass
+#else
   use lnd_import_export
+#endif
   use iso_c_binding
   use elm_cpl_indices
   use esmf, only: ESMF_clock
