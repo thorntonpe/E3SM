@@ -98,6 +98,7 @@ _TESTS = {
             "ERS.ELM_USRDAT.I1850CNPRDCTCBC.elm-usrpft_codetest_I1850CNPRDCTCBC",
             "ERS.r05_r05.IELM.elm-V2_ELM_MOSART_features",
             "ERS.ELM_USRDAT.IELM.elm-surface_water_dynamics"
+            "ERS.ELM_USRDAT.I1850CNPRDCTCBC.elm-polygonal_tundra"
             )
         },
 
