@@ -4191,6 +4191,7 @@
         <command name="load">gcc/12.2.0</command>
         <command name="load">openmpi/4.0.4</command>
         <command name="load">openblas/0.3.23</command>
+        <command name="use">-a /ccsopen/proj/cli185/ats-dev/modulefiles</command>
         <command name="load">ats/tpls-0.98.9+master/cades-baseline/openblas-0.3.23-openmpi-4.0.4-gcc-12.2.0/opt</command>
       </modules>
 
