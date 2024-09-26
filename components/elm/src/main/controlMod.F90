@@ -337,7 +337,7 @@ contains
 
    ! NGEE Arctic options
    namelist /elm_inparm/ &
-         use_polygonal_tundra
+         use_polygonal_tundra, use_arctic_init
     ! ----------------------------------------------------------------------
     ! Default values
     ! ----------------------------------------------------------------------
@@ -1000,6 +1000,8 @@ contains
 
     !NGEE Arctic options
     call mpi_bcast (use_polygonal_tundra, 1, MPI_LOGICAL, 0, mpicom, ier)
+    call mpi_bcast (use_arctic_init, 1, MPI_LOGICAL, 0, mpicom, ier)
+
   end subroutine control_spmd
 
   !------------------------------------------------------------------------
@@ -1282,6 +1284,8 @@ contains
 
     ! NGEE Arctic options
     if (use_polygonal_tundra) write(iulog, *) '    use_polygonal_tundra    =', use_polygonal_tundra
+    if (use_arctic_init) write(iulog, *)      '    use_arctic_init    ='     , use_arctic_init
+
   end subroutine control_print
 
 end module controlMod
